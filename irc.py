@@ -18,7 +18,7 @@
 
 import socket
 import sys
-import ssl
+#import ssl
 
 class IRC:
 
@@ -32,7 +32,7 @@ class IRC:
         self.irc.send(bytes(did.encode()))
 
     def connect(self, server, channel, botnick):
-        self.irc.connect(server)
+        self.irc.connect((server,6667))
 
         url = ("USER " + botnick + " " + botnick +" " + botnick + " :This is a fun botty!n" )
         self.irc.send(bytes(url.encode()))
@@ -46,9 +46,13 @@ class IRC:
     def get_text(self):
         text = self.irc.recv(2048)
         print(text)
+
         return(text)
 
+        #if text.find('PING') != -1:
+         #   dd = ('PONG ' + text. split() [1] + 'rn')
+          #  self.irc.send(bytes(dd.encode()))
         if text.find('PING') != -1:
-            dd = ('PONG ' + text. split() [1] + 'rn')
-            self.irc.send(bytes(dd.encode()))
+            self.ircsock.send(bytes('PONG ' + text.split() [1]))
+
 
